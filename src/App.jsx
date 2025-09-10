@@ -11,10 +11,16 @@ function App() {
     "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
   const getUserData = async () => {
-    let response = await fetch(API_URL);
+    try{
+       let response = await fetch(API_URL);
     let data = await response.json();
     setAllUserData(data);
     setUserData(data.slice(0, rowsPerPage));
+    }
+    catch(error){
+      console.log('failed to fetch data',error)
+    }
+   
   };
 
   const handleNext = () => {
