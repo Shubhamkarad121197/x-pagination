@@ -11,16 +11,20 @@ function App() {
     "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
   const getUserData = async () => {
-    try{
-       let response = await fetch(API_URL);
-    let data = await response.json();
-    setAllUserData(data);
-    setUserData(data.slice(0, rowsPerPage));
+    try {
+      let response = await fetch(API_URL);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      let data = await response.json();
+      setAllUserData(data);
+      setUserData(data.slice(0, rowsPerPage));
+    } catch (error) {
+      alert("Failed to fetch data");
+      console.error("Fetch error:", error);
     }
-    catch(error){
-      console.log('failed to fetch data',error)
-    }
-   
   };
 
   const handleNext = () => {
